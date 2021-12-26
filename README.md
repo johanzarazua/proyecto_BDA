@@ -48,7 +48,7 @@ Este modelo sera dividido en 2 modulos y cada uno de ellos sera administrado por
 ![Modulos](Modulos.png)
 
 
-### Cotenido del respositorio 
+## Cotenido del respositorio 
 ---
 
 En el repositorio se podran encontrar la siguiente lista de scripts:
