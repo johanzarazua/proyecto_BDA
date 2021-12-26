@@ -1,7 +1,7 @@
 **PROYECTO BDA.**
 ==
 
-En estre proyecto se realiza la creacion de una base de datos desde consola con
+En estre proyecto se realiza la creación de una base de datos desde consola con
 el fin de poner en prcatica los conceptos de adminstricacion de una base de datos
 utilizando Oracle 19c en un sistema operativo linux. Adicionalmente, se creara 
 e implemenrara un modelo relacional con base en las siguientes reglas de negocio.
@@ -55,8 +55,8 @@ En el repositorio se podran encontrar la siguiente lista de scripts:
 
 | Nombre del script | Descripción |
 |-------------------|-------------|
-| s-01-crear-loop-devices.sh| Creacion de los directorios donde se encontraran diferentes archivos de la base de datos y simulacion de puntos demontaje usando loop devices para multilpexar algunos archivos.|
-|s-02-crea-pwd-param-oracle.sh| Creacion del archivo de password y pfile con parametros inciales de la base de datos|
-|s-03creacion-bd.sql|Creacion de la base de datos usando el comando create database|
+| s-01-crear-loop-devices.sh| Creación de los directorios donde se encontraran diferentes archivos de la base de datos y simulacion de puntos demontaje usando loop devices para multiplexar algunos archivos.|
+|s-02-crea-pwd-param-oracle.sh| Creación del archivo de password y pfile con parametros inciales de la base de datos|
+|s-03creacion-bd.sql|Creación de la base de datos usando el comando create database|
 
 
