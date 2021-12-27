@@ -60,5 +60,6 @@ En el repositorio se podran encontrar la siguiente lista de scripts:
 |s-03creacion-bd.sql|Creación de la base de datos usando el comando create database|
 |s-04-crea-tablespaces.sql| Creación de los tablespaces necesarios para cada modulo asi como un tablespace compartido para campos blob|
 |s-05-crea-usarios.sql| Creación de usuarios por modulo y asigancion de privilegios para crear objetos|
-
+|s-06-ddl_biblioteca.sql| Creación de tablas e indices del modulo biblioteca|
+|s-07-ddl_usuario.sql| Creación de tablas e indices del modulo usuario|
 
