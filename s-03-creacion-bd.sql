@@ -10,22 +10,20 @@ startup nomount
 
 create spfile from pfile;
 
-!ls $ORACLE_HOME/dbs/spfilehezabda.ora
-
 whenever sqlerror exit rollback
 
 create database hezaproy
   user sys identified by system
   user system identified by system
-  logfile gruop 1 (
+  logfile group 1 (
     '/u01/app/oracle/oradata/HEZAPROY/disk_1/redo01a.log',
     '/u01/app/oracle/oradata/HEZAPROY/disk_2/redo01b.log',
     '/u01/app/oracle/oradata/HEZAPROY/disk_3/redo01c.log') size 50m blocksize 512,
-  logfile gruop 2 (
+  group 2 (
     '/u01/app/oracle/oradata/HEZAPROY/disk_1/redo02a.log',
     '/u01/app/oracle/oradata/HEZAPROY/disk_2/redo02b.log',
     '/u01/app/oracle/oradata/HEZAPROY/disk_3/redo02c.log') size 50m blocksize 512,
-  logfile gruop 3 (
+  group 3 (
     '/u01/app/oracle/oradata/HEZAPROY/disk_1/redo03a.log',
     '/u01/app/oracle/oradata/HEZAPROY/disk_2/redo03b.log',
     '/u01/app/oracle/oradata/HEZAPROY/disk_3/redo03c.log') size 50m blocksize 512
@@ -57,6 +55,6 @@ alter user system identified by system;
 @?/rdbms/admin/catproc.sql
 @?/rdbms/admin/utlrp.sql
 
-connect system/system2
+connect system/system
 
 @?/sqlplus/admin/pupbld.sql
