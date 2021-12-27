@@ -50,6 +50,7 @@ create database hezaproy
 
 alter user sys identified by system;
 alter user system identified by system;
+alter user sysbackup identified by system;
 
 @?/rdbms/admin/catalog.sql
 @?/rdbms/admin/catproc.sql
