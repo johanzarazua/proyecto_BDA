@@ -64,3 +64,4 @@ En el repositorio se podran encontrar la siguiente lista de scripts:
 |s-07-ddl-usuario.sql| Creación de tablas e indices del modulo usuario|
 |s-08-modos-conexion.sql| Configuracion de parametros necesarios para contar con modos de conexion dedicado y compartido|
 
+

@@ -14,12 +14,12 @@ grant create session, create table, create sequence, create synonym,
 create user heza_usaurio identified by hezau default tablespace ts_usuario
   quota unlimited on ts_usuario
   quota unlimited on ts_usuario_index
-  quota unlimited on ts_blob;
+  quota unlimited on ts_lob;
 
 -- Usuario para modulo biblioteca
 create user heza_biblioteca identified by hezab default tablespace ts_biblioteca
   quota unlimited on ts_biblioteca
   quota unlimited on ts_biblioteca_index
-  quota unlimited on ts_blob;
+  quota unlimited on ts_lob;
 
 grant rol_admin_proy to heza_usaurio, heza_biblioteca;

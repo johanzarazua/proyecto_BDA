@@ -17,14 +17,15 @@ create table usuario(
   semestre                number(2, 0),
   usuario                 varchar2(50)     not null,
   password                varchar2(40)     not null,
-  foto                    blob             not null,
+  foto                    blob             not null   default empty_blob(),
   con_prestamo            number(1, 0)     not null,
   con_prestamo_vencido    number(1, 0)     not null,
   constraint usuario_pk primary key (usuario_id) using index(
     create unique index usuario_pk_iuk on usuario(usuario_id)
       tablespace ts_usuario_index
   )
-) tablespace ts_usuario;
+) tablespace ts_usuario
+lob(foto) store as (tablespace ts_lob);
 
 
 -- 

@@ -124,7 +124,7 @@ create table libro(
   recurso_id      integer          not null,
   titulo          varchar2(40)     not null,
   isbn            varchar2(17)     not null,
-  pdf             blob             not null,
+  pdf             blob             not null   default empty_blob(),
   descripcion     varchar2(500)    not null,
   editorial_id    integer          not null,
   constraint libro_pk primary key (recurso_id) using index(
@@ -135,7 +135,8 @@ create table libro(
     references recurso(recurso_id),
   constraint libro_editorial_id_fk foreign key (editorial_id)
     references editorial(editorial_id)
-) tablespace ts_biblioteca;
+) tablespace ts_biblioteca
+lob(pdf) store as (tablespace ts_lob);
 
 create index libro_recurso_id_fk_ix on libro(recurso_id)
   tablespace ts_biblioteca_index;
@@ -274,13 +275,14 @@ create table tesis(
   universidad         varchar2(200)    not null,
   anio_publicacion    number(4, 0)     not null,
   mes_publicacion     number(2, 0)     not null,
-  pdf                 blob,
+  pdf                 blob             default empty_blob(),
   constraint tesis_pk primary key (recurso_id) using index(
     create unique index tesis_pk_iuk on tesis(recurso_id)
       tablespace ts_biblioteca_index
   ), 
   constraint tesis_recurso_id_fk foreign key (recurso_id)
     references recurso(recurso_id)
-) tablespace ts_biblioteca;
+) tablespace ts_biblioteca
+lob(pdf) store as (tablespace ts_lob);
 
 grant references on libro to heza_usaurio;

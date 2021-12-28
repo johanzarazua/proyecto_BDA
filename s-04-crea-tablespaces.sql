@@ -5,7 +5,7 @@
 connect sys as sysdba
 
 -- Tablespace comun para almacenar fotografias y PDFs
-create bigfile tablespace ts_blob
+create bigfile tablespace ts_lob
   datafile '/u01/app/oracle/oradata/HEZAPROY/disk_1/ts_blob01.dbf' size 3G
   extent management local autoallocate
   segment space management auto;
