@@ -63,17 +63,17 @@ create table status_recurso(
 
 
 -- 
--- table: blibioteca 
+-- table: biblioteca 
 --
-create table blibioteca(
+create table biblioteca(
   biblioteca_id     integer          generated always as identity,
   nombre            varchar2(50)     not null,
   folio             varchar2(5)      not null,
   ubi_geografica    varchar2(50)     not null,
   pagina_web        varchar2(250)    not null,
   direccion         varchar2(500)    not null,
-  constraint blibioteca_pk primary key (biblioteca_id) using index(
-    create unique index blibioteca_pk_iuk on blibioteca(biblioteca_id) 
+  constraint biblioteca_pk primary key (biblioteca_id) using index(
+    create unique index biblioteca_pk_iuk on biblioteca(biblioteca_id) 
       tablespace ts_biblioteca_index
   )
 ) tablespace ts_biblioteca;
@@ -103,7 +103,7 @@ create table recurso(
   constraint recurso_area_conocimiento_id_fk foreign key (area_conocimiento_id)
     references area_conocimiento(area_conocimiento_id),
   constraint recurso_biblioteca_id_fk foreign key (biblioteca_id)
-    references blibioteca(biblioteca_id),
+    references biblioteca(biblioteca_id),
   constraint recurso_tipo_chk check ( tipo in ('L', 'R', 'T') )
 ) tablespace ts_biblioteca;
 
@@ -223,7 +223,7 @@ create table lista_area_c(
       tablespace ts_biblioteca_index
   ), 
   constraint lista_area_c_biblioteca_id_fk foreign key (biblioteca_id)
-    references blibioteca(biblioteca_id),
+    references biblioteca(biblioteca_id),
   constraint lista_area_c_area_conocimiento_id_fk foreign key
     (area_conocimiento_id) references area_conocimiento(area_conocimiento_id)
 ) tablespace ts_biblioteca;
