@@ -2,7 +2,7 @@
 --@Fecha creacion: 27/12/2021
 --@Descripcion: Creacion de tablas e indices del modulo biblioteca
 
-connect heza_biblioteca
+connect heza_biblioteca/hezab
 
 set serveroutput on;
 whenever sqlerror exit rollback
@@ -26,7 +26,7 @@ end;
 -- table: area_conocimiento 
 --
 create table area_conocimiento(
-  area_conocimiento_id    integer          generated always as identity,
+  area_conocimiento_id    integer          generated always as identity(start with 1 increment by 1),
   nombre                  varchar2(50)     not null,
   constraint area_conocimiento_pk primary key (area_conocimiento_id) using index(
     create unique index area_conocimiento_pk_iuk on 
@@ -39,7 +39,7 @@ create table area_conocimiento(
 -- table: autor 
 --
 create table autor(
-  autor_id     integer          generated always as identity,
+  autor_id     integer          generated always as identity(start with 1 increment by 1),
   nombre       varchar2(50)     not null,
   apellidos    varchar2(100)    not null,
   constraint autor_pk primary key (autor_id) using index(
@@ -53,7 +53,7 @@ create table autor(
 -- table: status_recurso 
 --
 create table status_recurso(
-  status_recurso_id    integer          generated always as identity,
+  status_recurso_id    integer          generated always as identity(start with 1 increment by 1),
   titulo               varchar2(100)    not null,
   constraint status_recurso_pk primary key (status_recurso_id) using index(
     create unique index status_recurso_pk_iuk on 
@@ -63,17 +63,17 @@ create table status_recurso(
 
 
 -- 
--- table: blibioteca 
+-- table: biblioteca 
 --
-create table blibioteca(
-  biblioteca_id     integer          generated always as identity,
+create table biblioteca(
+  biblioteca_id     integer          generated always as identity(start with 1 increment by 1),
   nombre            varchar2(50)     not null,
   folio             varchar2(5)      not null,
   ubi_geografica    varchar2(50)     not null,
   pagina_web        varchar2(250)    not null,
   direccion         varchar2(500)    not null,
-  constraint blibioteca_pk primary key (biblioteca_id) using index(
-    create unique index blibioteca_pk_iuk on blibioteca(biblioteca_id) 
+  constraint biblioteca_pk primary key (biblioteca_id) using index(
+    create unique index biblioteca_pk_iuk on biblioteca(biblioteca_id) 
       tablespace ts_biblioteca_index
   )
 ) tablespace ts_biblioteca;
@@ -83,7 +83,7 @@ create table blibioteca(
 -- table: recurso 
 --
 create table recurso(
-  recurso_id              integer          generated always as identity,
+  recurso_id              integer          generated always as identity(start with 1 increment by 1),
   num_clasificacion       varchar2(20)     not null,
   fecha_adquisicion       date             not null,
   fecha_status            date             not null,
@@ -103,7 +103,7 @@ create table recurso(
   constraint recurso_area_conocimiento_id_fk foreign key (area_conocimiento_id)
     references area_conocimiento(area_conocimiento_id),
   constraint recurso_biblioteca_id_fk foreign key (biblioteca_id)
-    references blibioteca(biblioteca_id),
+    references biblioteca(biblioteca_id),
   constraint recurso_tipo_chk check ( tipo in ('L', 'R', 'T') )
 ) tablespace ts_biblioteca;
 
@@ -124,7 +124,7 @@ create index recurso_biblioteca_id_fk_ix on recurso(biblioteca_id)
 -- table: editorial 
 --
 create table editorial(
-  editorial_id    integer          generated always as identity,
+  editorial_id    integer          generated always as identity(start with 1 increment by 1),
   clave           varchar2(50)     not null,
   nombre          varchar2(150)    not null,
   descripcion     varchar2(250)    not null,
@@ -140,9 +140,9 @@ create table editorial(
 --
 create table libro(
   recurso_id      integer          not null,
-  titulo          varchar2(40)     not null,
+  titulo          varchar2(200)     not null,
   isbn            varchar2(17)     not null,
-  pdf             blob             default empty_blob() not null,
+  pdf             blob             default on null empty_blob(),
   descripcion     varchar2(500)    not null,
   editorial_id    integer          not null,
   constraint libro_pk primary key (recurso_id) using index(
@@ -166,7 +166,7 @@ create index libro_editorial_id_fk_ix on libro(editorial_id)
 -- table: autor_libro 
 --
 create table autor_libro(
-  autor_libro_id    integer          generated always as identity,
+  autor_libro_id    integer          generated always as identity(start with 1 increment by 1),
   recurso_id        integer          not null,
   autor_id          integer          not null,
   constraint autor_libro_pk primary key (autor_libro_id) using index(
@@ -189,7 +189,7 @@ create index autor_libro_autor_id_fk_ix on autor_libro(autor_id)
 -- table: historico_status_recurso 
 --
 create table historico_status_recurso(
-  historico_status_recurso_id    integer          generated always as identity,
+  historico_status_recurso_id    integer          generated always as identity(start with 1 increment by 1),
   fecha                          date             not null,
   recurso_id                     integer          not null,
   status_recurso_id              integer          not null,
@@ -215,7 +215,7 @@ create index historico_status_recurso_status_recurso_id_fk_ix on
 -- table: lista_area_c 
 --
 create table lista_area_c(
-  lista_area_c_id         integer          generated always as identity,
+  lista_area_c_id         integer          generated always as identity(start with 1 increment by 1),
   biblioteca_id           integer          not null,
   area_conocimiento_id    integer          not null,
   constraint lista_area_c_pk primary key (lista_area_c_id) using index(
@@ -223,7 +223,7 @@ create table lista_area_c(
       tablespace ts_biblioteca_index
   ), 
   constraint lista_area_c_biblioteca_id_fk foreign key (biblioteca_id)
-    references blibioteca(biblioteca_id),
+    references biblioteca(biblioteca_id),
   constraint lista_area_c_area_conocimiento_id_fk foreign key
     (area_conocimiento_id) references area_conocimiento(area_conocimiento_id)
 ) tablespace ts_biblioteca;
@@ -238,7 +238,7 @@ create index lista_area_c_area_conocimiento_id_fk_ix on
 -- table: palabra_clave 
 --
 create table palabra_clave(
-  palabra_clave_id    integer          generated always as identity,
+  palabra_clave_id    integer          generated always as identity(start with 1 increment by 1),
   palabra             varchar2(80)     not null,
   recurso_id          integer          not null,
   constraint palabra_clave_pk primary key (palabra_clave_id) using index(
@@ -260,7 +260,7 @@ create table palabra_clave(
 --
 create table revista(
   recurso_id          integer          not null,
-  titulo              varchar2(40)     not null,
+  titulo              varchar2(200)     not null,
   sinopsis            varchar2(500)    not null,
   mes_publicacion     number(2, 0)     not null,
   anio_publicacion    number(4, 0)     not null,
@@ -287,13 +287,13 @@ create index revista_editorial_id_fk_ix on revista(editorial_id)
 --
 create table tesis(
   recurso_id          integer          not null,
-  titulo              varchar2(40)     not null,
+  titulo              varchar2(200)     not null,
   tesista             varchar2(200)    not null,
   carrera             varchar2(80)     not null,
   universidad         varchar2(200)    not null,
   anio_publicacion    number(4, 0)     not null,
   mes_publicacion     number(2, 0)     not null,
-  pdf                 blob,
+  pdf                 blob             default empty_blob(),
   constraint tesis_pk primary key (recurso_id) using index(
     create unique index tesis_pk_iuk on tesis(recurso_id)
       tablespace ts_biblioteca_index
