@@ -25,7 +25,7 @@ end;
 -- table: usuario 
 --
 create table usuario(
-  usuario_id              integer          generated always as identity,
+  usuario_id              integer          generated always as identity(start with 1 increment by 1),
   nombre                  varchar2(50)     not null,
   apellidos               varchar2(40)     not null,
   matricula               varchar2(40)     not null,
@@ -52,7 +52,7 @@ lob(foto) store as (tablespace ts_lob);
 -- table: prestamo 
 --
 create table prestamo(
-  pretsamo_id         integer          generated always as identity,
+  pretsamo_id         integer          generated always as identity(start with 1 increment by 1),
   folio_prestamo      number(10, 0)    not null,
   fecha_vigencia      date             not null,
   fecha_devolucion    date             not null,
@@ -80,7 +80,7 @@ create index prestamo_usuario_id_fk_ix on prestamo(usuario_id)
 -- table: libro_prestamo 
 --
 create table libro_prestamo(
-  libro_prestamo_id    integer          generated always as identity,
+  libro_prestamo_id    integer          generated always as identity(start with 1 increment by 1),
   recurso_id           integer          not null,
   pretsamo_id          integer          not null,
   constraint libro_prestamo_pk primary key (libro_prestamo_id) using index(
