@@ -6,25 +6,25 @@
 --se sale de SQL *Plus
 whenever  sqlerror exit rollback
 
-Prompt conectando usuario sys
-connect sys/system as sysdba
+Prompt conectando usuario heza_biblioteca
+connect heza_biblioteca@HEZAPROY
 
 set define off
 
 Prompt realizando la carga de datos
-@biblioteca.sql
-@area_conocimiento.sql
-@lista_area_c.sql
-@status_recurso.sql
-@historico_status_recurso.sql
-@palabra_clave.sql
-@autor.sql
-@editorial.sql
-@recurso.sql
-@libro.sql
-@revista.sql
-@tesis.sql
-@autor_libro.sql
+@@datos_iniciales/biblioteca.sql
+@@datos_iniciales/area_conocimiento.sql
+@@datos_iniciales/status_recurso.sql
+@@datos_iniciales/recurso.sql
+@@datos_iniciales/historico_status_recurso.sql
+@@datos_iniciales/palabra_clave.sql
+@@datos_iniciales/autor.sql
+@@datos_iniciales/editorial.sql
+@@datos_iniciales/libro.sql
+@@datos_iniciales/revista.sql
+@@datos_iniciales/tesis.sql
+@@datos_iniciales/lista_area_c.sql
+@@datos_iniciales/autor_libro.sql
 
 
 
