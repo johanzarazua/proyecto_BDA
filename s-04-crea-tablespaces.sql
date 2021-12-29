@@ -4,6 +4,8 @@
 
 connect sys as sysdba
 
+whenever sqlerror exit rollback
+
 -- Tablespace comun para almacenar fotografias y PDFs
 create bigfile tablespace ts_lob
   datafile '/u01/app/oracle/oradata/HEZAPROY/disk_1/ts_blob01.dbf' size 3G

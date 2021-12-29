@@ -4,6 +4,24 @@
 
 connect heza_biblioteca
 
+set serveroutput on;
+whenever sqlerror exit rollback
+
+-- Bloque para eliminar objectos en caso de existir
+declare 
+  cursor cur_objetos is
+    select object_name from user_objects where object_type = 'TABLE';
+begin
+  for r in cur_objetos loop
+    execute immediate 'drop table ' || r.object_name || ' cascade constraints PURGE';
+  end loop;
+exception
+  when others then
+    dbms_output.put_line('ERROR, se obtuvo excepción  no esperada => ' || TO_CHAR(sqlcode));
+    dbms_output.put_line('ERROR => ' || SQLERRM);
+end;
+/
+
 -- 
 -- table: area_conocimiento 
 --
@@ -66,7 +84,7 @@ create table blibioteca(
 --
 create table recurso(
   recurso_id              integer          generated always as identity,
-  num_clasificacion       varchar2(18)     not null,
+  num_clasificacion       varchar2(20)     not null,
   fecha_adquisicion       date             not null,
   fecha_status            date             not null,
   tipo                    varchar2(1)      not null,
@@ -124,7 +142,7 @@ create table libro(
   recurso_id      integer          not null,
   titulo          varchar2(40)     not null,
   isbn            varchar2(17)     not null,
-  pdf             blob             not null   default empty_blob(),
+  pdf             blob             default empty_blob() not null,
   descripcion     varchar2(500)    not null,
   editorial_id    integer          not null,
   constraint libro_pk primary key (recurso_id) using index(
@@ -138,8 +156,8 @@ create table libro(
 ) tablespace ts_biblioteca
 lob(pdf) store as (tablespace ts_lob);
 
-create index libro_recurso_id_fk_ix on libro(recurso_id)
-  tablespace ts_biblioteca_index;
+-- create index libro_recurso_id_fk_ix on libro(recurso_id)
+--   tablespace ts_biblioteca_index;
 create index libro_editorial_id_fk_ix on libro(editorial_id)
   tablespace ts_biblioteca_index;
 
@@ -152,7 +170,7 @@ create table autor_libro(
   recurso_id        integer          not null,
   autor_id          integer          not null,
   constraint autor_libro_pk primary key (autor_libro_id) using index(
-    create unique index autor_libro_pk_iuk on autor_id(autor_libro_id)
+    create unique index autor_libro_pk_iuk on autor_libro(autor_libro_id)
       tablespace ts_biblioteca_index
   ), 
   constraint autor_libro_recurso_id_fk foreign key (recurso_id)
@@ -161,8 +179,8 @@ create table autor_libro(
     references autor(autor_id)
 ) tablespace ts_biblioteca;
 
-create index autor_libro_recurso_id_fk_ix on autor_libro(recurso_id)
-  tablespace ts_biblioteca_index;
+-- create index autor_libro_recurso_id_fk_ix on autor_libro(recurso_id)
+--   tablespace ts_biblioteca_index;
 create index autor_libro_autor_id_fk_ix on autor_libro(autor_id)
   tablespace ts_biblioteca_index;
 
@@ -249,7 +267,7 @@ create table revista(
   num_emision         varchar2(40)     not null,
   editorial_id        integer          not null,
   constraint revista_pk primary key (recurso_id) using index(
-    create unique index recurso_pk_iuk on revista(recurso_id)
+    create unique index revista_pk_iuk on revista(recurso_id)
       tablespace ts_biblioteca_index
   ), 
   constraint revista_recurso_id_fk foreign key (recurso_id)
@@ -258,8 +276,8 @@ create table revista(
     references editorial(editorial_id)
 ) tablespace ts_biblioteca;
 
-create index revista_recurso_id_fk_ix on revista(recurso_id)
-  tablespace ts_biblioteca_index;
+-- create index revista_recurso_id_fk_ix on revista(recurso_id)
+--   tablespace ts_biblioteca_index;
 create index revista_editorial_id_fk_ix on revista(editorial_id)
   tablespace ts_biblioteca_index;
 
@@ -275,7 +293,7 @@ create table tesis(
   universidad         varchar2(200)    not null,
   anio_publicacion    number(4, 0)     not null,
   mes_publicacion     number(2, 0)     not null,
-  pdf                 blob             default empty_blob(),
+  pdf                 blob,
   constraint tesis_pk primary key (recurso_id) using index(
     create unique index tesis_pk_iuk on tesis(recurso_id)
       tablespace ts_biblioteca_index
@@ -285,4 +303,4 @@ create table tesis(
 ) tablespace ts_biblioteca
 lob(pdf) store as (tablespace ts_lob);
 
-grant references on libro to heza_usaurio;
+grant references on libro to heza_usuario;
