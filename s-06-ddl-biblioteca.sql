@@ -2,7 +2,7 @@
 --@Fecha creacion: 27/12/2021
 --@Descripcion: Creacion de tablas e indices del modulo biblioteca
 
-connect heza_biblioteca
+connect heza_biblioteca/hezab
 
 set serveroutput on;
 whenever sqlerror exit rollback
@@ -140,9 +140,9 @@ create table editorial(
 --
 create table libro(
   recurso_id      integer          not null,
-  titulo          varchar2(40)     not null,
+  titulo          varchar2(200)     not null,
   isbn            varchar2(17)     not null,
-  pdf             blob             default empty_blob() not null,
+  pdf             blob             default on null empty_blob(),
   descripcion     varchar2(500)    not null,
   editorial_id    integer          not null,
   constraint libro_pk primary key (recurso_id) using index(
@@ -260,7 +260,7 @@ create table palabra_clave(
 --
 create table revista(
   recurso_id          integer          not null,
-  titulo              varchar2(40)     not null,
+  titulo              varchar2(200)     not null,
   sinopsis            varchar2(500)    not null,
   mes_publicacion     number(2, 0)     not null,
   anio_publicacion    number(4, 0)     not null,
@@ -287,13 +287,13 @@ create index revista_editorial_id_fk_ix on revista(editorial_id)
 --
 create table tesis(
   recurso_id          integer          not null,
-  titulo              varchar2(40)     not null,
+  titulo              varchar2(200)     not null,
   tesista             varchar2(200)    not null,
   carrera             varchar2(80)     not null,
   universidad         varchar2(200)    not null,
   anio_publicacion    number(4, 0)     not null,
   mes_publicacion     number(2, 0)     not null,
-  pdf                 blob,
+  pdf                 blob             default empty_blob(),
   constraint tesis_pk primary key (recurso_id) using index(
     create unique index tesis_pk_iuk on tesis(recurso_id)
       tablespace ts_biblioteca_index
