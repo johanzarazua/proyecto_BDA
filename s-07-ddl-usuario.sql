@@ -2,7 +2,24 @@
 --@Fecha creacion: 27/12/2021
 --@Descripcion: Creacion de tablas e indices del modulo usuario
 
-connect heza_usaurio
+connect heza_usuario
+
+whenever sqlerror exit rollback
+
+-- Bloque para eliminar objectos en caso de existir
+declare 
+  cursor cur_objetos is
+    select object_name from user_objects where object_type = 'TABLE';
+begin
+  for r in cur_objetos loop
+    execute immediate 'drop table ' || r.object_name || ' cascade constraints PURGE';
+  end loop;
+exception
+  when others then
+    dbms_output.put_line('ERROR, se obtuvo excepción  no esperada => ' || TO_CHAR(sqlcode));
+    dbms_output.put_line('ERROR => ' || SQLERRM);
+end;
+/
 
 -- 
 -- table: usuario 
@@ -17,13 +34,16 @@ create table usuario(
   semestre                number(2, 0),
   usuario                 varchar2(50)     not null,
   password                varchar2(40)     not null,
-  foto                    blob             not null   default empty_blob(),
+  foto                    blob             default empty_blob() not null,
   con_prestamo            number(1, 0)     not null,
   con_prestamo_vencido    number(1, 0)     not null,
   constraint usuario_pk primary key (usuario_id) using index(
     create unique index usuario_pk_iuk on usuario(usuario_id)
       tablespace ts_usuario_index
-  )
+  ),
+  constraint usuario_semestre_chk 
+    check ( (es_estudiante = 1 and semestre between 1 and 10) or
+      es_estudiante = 0 and semestre is null  )
 ) tablespace ts_usuario
 lob(foto) store as (tablespace ts_lob);
 
