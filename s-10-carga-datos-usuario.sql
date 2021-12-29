@@ -7,14 +7,14 @@
 whenever  sqlerror exit rollback
 
 Prompt conectando usuario sys
-cconnect heza_usuario@HEZAPROY
+connect heza_usuario@HEZAPROY
 
 set define off
 
 Prompt realizando la carga de datos
 @datos_iniciales/usuario.sql
 @datos_iniciales/prestamo.sql
--- @datos_iniciales/libro_prestamo.sql
+@datos_iniciales/libro_prestamo.sql
 
 set define on
 

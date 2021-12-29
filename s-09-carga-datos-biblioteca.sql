@@ -7,7 +7,7 @@
 whenever  sqlerror exit rollback
 
 Prompt conectando usuario heza_biblioteca
-connect heza_biblioteca@HEZAPROY
+connect heza_biblioteca/hezab@HEZAPROY
 
 set define off
 
