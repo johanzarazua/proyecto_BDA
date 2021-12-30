@@ -26,7 +26,7 @@ end;
 -- table: area_conocimiento 
 --
 create table area_conocimiento(
-  area_conocimiento_id    integer          generated always as identity(start with 1 increment by 1),
+  area_conocimiento_id    integer          generated always as identity(start with 1 increment by 1 nocache),
   nombre                  varchar2(50)     not null,
   constraint area_conocimiento_pk primary key (area_conocimiento_id) using index(
     create unique index area_conocimiento_pk_iuk on 
@@ -39,7 +39,7 @@ create table area_conocimiento(
 -- table: autor 
 --
 create table autor(
-  autor_id     integer          generated always as identity(start with 1 increment by 1),
+  autor_id     integer          generated always as identity(start with 1 increment by 1 nocache),
   nombre       varchar2(50)     not null,
   apellidos    varchar2(100)    not null,
   constraint autor_pk primary key (autor_id) using index(
@@ -53,7 +53,7 @@ create table autor(
 -- table: status_recurso 
 --
 create table status_recurso(
-  status_recurso_id    integer          generated always as identity(start with 1 increment by 1),
+  status_recurso_id    integer          generated always as identity(start with 1 increment by 1 nocache),
   titulo               varchar2(100)    not null,
   constraint status_recurso_pk primary key (status_recurso_id) using index(
     create unique index status_recurso_pk_iuk on 
@@ -66,7 +66,7 @@ create table status_recurso(
 -- table: biblioteca 
 --
 create table biblioteca(
-  biblioteca_id     integer          generated always as identity(start with 1 increment by 1),
+  biblioteca_id     integer          generated always as identity(start with 1 increment by 1 nocache),
   nombre            varchar2(50)     not null,
   folio             varchar2(5)      not null,
   ubi_geografica    varchar2(50)     not null,
@@ -83,7 +83,7 @@ create table biblioteca(
 -- table: recurso 
 --
 create table recurso(
-  recurso_id              integer          generated always as identity(start with 1 increment by 1),
+  recurso_id              integer          generated always as identity(start with 1 increment by 1 nocache),
   num_clasificacion       varchar2(20)     not null,
   fecha_adquisicion       date             not null,
   fecha_status            date             not null,
@@ -124,7 +124,7 @@ create index recurso_biblioteca_id_fk_ix on recurso(biblioteca_id)
 -- table: editorial 
 --
 create table editorial(
-  editorial_id    integer          generated always as identity(start with 1 increment by 1),
+  editorial_id    integer          generated always as identity(start with 1 increment by 1 nocache),
   clave           varchar2(50)     not null,
   nombre          varchar2(150)    not null,
   descripcion     varchar2(250)    not null,
@@ -166,7 +166,7 @@ create index libro_editorial_id_fk_ix on libro(editorial_id)
 -- table: autor_libro 
 --
 create table autor_libro(
-  autor_libro_id    integer          generated always as identity(start with 1 increment by 1),
+  autor_libro_id    integer          generated always as identity(start with 1 increment by 1 nocache),
   recurso_id        integer          not null,
   autor_id          integer          not null,
   constraint autor_libro_pk primary key (autor_libro_id) using index(
@@ -189,7 +189,7 @@ create index autor_libro_autor_id_fk_ix on autor_libro(autor_id)
 -- table: historico_status_recurso 
 --
 create table historico_status_recurso(
-  historico_status_recurso_id    integer          generated always as identity(start with 1 increment by 1),
+  historico_status_recurso_id    integer          generated always as identity(start with 1 increment by 1 nocache),
   fecha                          date             not null,
   recurso_id                     integer          not null,
   status_recurso_id              integer          not null,
@@ -215,7 +215,7 @@ create index historico_status_recurso_status_recurso_id_fk_ix on
 -- table: lista_area_c 
 --
 create table lista_area_c(
-  lista_area_c_id         integer          generated always as identity(start with 1 increment by 1),
+  lista_area_c_id         integer          generated always as identity(start with 1 increment by 1 nocache),
   biblioteca_id           integer          not null,
   area_conocimiento_id    integer          not null,
   constraint lista_area_c_pk primary key (lista_area_c_id) using index(
@@ -238,7 +238,7 @@ create index lista_area_c_area_conocimiento_id_fk_ix on
 -- table: palabra_clave 
 --
 create table palabra_clave(
-  palabra_clave_id    integer          generated always as identity(start with 1 increment by 1),
+  palabra_clave_id    integer          generated always as identity(start with 1 increment by 1 nocache),
   palabra             varchar2(80)     not null,
   recurso_id          integer          not null,
   constraint palabra_clave_pk primary key (palabra_clave_id) using index(
@@ -304,3 +304,28 @@ create table tesis(
 lob(pdf) store as (tablespace ts_lob);
 
 grant references on libro to heza_usuario;
+
+-- Trigger para generar al menos un registro en historico por recurso
+prompt creando trigger para historico_status_recurso
+CREATE OR REPLACE TRIGGER tr_historico_status_recurso
+AFTER INSERT OR UPDATE of status_recurso_id
+ON recurso
+FOR EACH ROW
+DECLARE
+  v_fecha date;
+  v_recurso_id number;
+  v_status_recurso_id number;
+BEGIN
+  v_fecha := sysdate;
+  v_recurso_id := :new.recurso_id;
+  v_status_recurso_id := :new.status_recurso_id;
+  CASE
+    WHEN INSERTING THEN
+      insert into historico_status_recurso (fecha, recurso_id, status_recurso_id)
+      values (v_fecha, v_recurso_id, v_status_recurso_id);
+    WHEN UPDATING ('status_recurso_id') THEN
+      insert into historico_status_recurso (fecha, recurso_id, status_recurso_id)
+      values (v_fecha, :old.recurso_id, v_status_recurso_id);
+  END CASE;
+END tr_historico_status_recurso;
+/

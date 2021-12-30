@@ -6,8 +6,8 @@
 --se sale de SQL *Plus
 whenever  sqlerror exit rollback
 
-Prompt conectando usuario sys
-connect heza_usuario@HEZAPROY
+Prompt conectando usuario heza_usuario
+connect heza_usuario/hezau@HEZAPROY
 
 set define off
 
