@@ -304,6 +304,8 @@ create table tesis(
 lob(pdf) store as (tablespace ts_lob);
 
 grant references on libro to heza_usuario;
+grant select on libro to heza_usuario;
+create public synonym libro for heza_biblioteca.libro;
 
 -- Trigger para generar al menos un registro en historico por recurso
 prompt creando trigger para historico_status_recurso
