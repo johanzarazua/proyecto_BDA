@@ -9,7 +9,7 @@ connect heza_biblioteca
 
 prompt creando trigger para historico_status_recurso
 CREATE OR REPLACE TRIGGER tr_historico_status_recurso
-AFTER INSERT
+AFTER INSERT OR UPDATE
 ON recurso
 FOR EACH ROW
 DECLARE
@@ -20,8 +20,14 @@ BEGIN
   v_fecha := sysdate;
   v_recurso_id := :new.recurso_id;
   v_status_recurso_id := :new.status_recurso_id;
-  insert into historico_status_recurso (fecha, recurso_id, status_recurso_id)
-  values (v_fecha, v_recurso_id, v_status_recurso_id);
+  CASE
+    WHEN INSERTING THEN
+      insert into historico_status_recurso (fecha, recurso_id, status_recurso_id)
+      values (v_fecha, v_recurso_id, v_status_recurso_id);
+    WHEN UPDATING ('status_recurso_id') THEN
+      insert into historico_status_recurso (fecha, recurso_id, status_recurso_id)
+      values (v_fecha, :old.recurso_id, v_status_recurso_id);
+  END CASE;
 END tr_historico_status_recurso;
 /
 
