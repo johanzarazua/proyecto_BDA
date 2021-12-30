@@ -296,5 +296,3 @@ end;
 
 Prompt Confirmando cambios
 commit;
-
-grant select on libro to heza_usuario;
