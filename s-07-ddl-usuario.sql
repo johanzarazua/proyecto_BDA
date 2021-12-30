@@ -2,7 +2,7 @@
 --@Fecha creacion: 27/12/2021
 --@Descripcion: Creacion de tablas e indices del modulo usuario
 
-connect heza_usuario
+connect heza_usuario/hezau
 
 whenever sqlerror exit rollback
 
@@ -40,6 +40,14 @@ create table usuario(
   constraint usuario_pk primary key (usuario_id) using index(
     create unique index usuario_pk_iuk on usuario(usuario_id)
       tablespace ts_usuario_index
+  ),
+  constraint usuario_email_uk unique (email) using index(
+    create unique index usuario_email_uk_iuk on
+      usuario(email) tablespace ts_usuario_index
+  ),
+  constraint usuario_usuario_uk unique (usuario) using index(
+    create unique index usuario_usuario_uk_iuk on
+      usuario(usuario) tablespace ts_usuario_index
   ),
   constraint usuario_semestre_chk 
     check ( (es_estudiante = 1 and semestre between 1 and 10) or
