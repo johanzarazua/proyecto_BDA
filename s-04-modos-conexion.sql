@@ -7,10 +7,14 @@ whenever sqlerror exit rollback;
 --Autenticación con el usuario sys 
 connect sys/system as sysdba
 
+Prompt Modificando paramtros dispatchers y shared_servers
 alter system set dispatchers='(dispatchers=2)(protocol=tcp)';
 alter system set shared_servers=4;
 
 alter system register;
+
+Prompt Listo !!!
+disconnect
 
 --Configuración tnsnames.ora
 /*
