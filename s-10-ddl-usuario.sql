@@ -34,7 +34,7 @@ create table usuario(
   email                   varchar2(200)    not null,
   es_estudiante           number(1, 0)     not null,
   semestre                number(2, 0),
-  usuario                 varchar2(50)     not null,
+  usuario                 varchar2(100)     not null,
   password                varchar2(40)     not null,
   foto                    blob             default on null empty_blob(),
   con_prestamo            number(1, 0)     not null,

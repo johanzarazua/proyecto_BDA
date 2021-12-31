@@ -240,7 +240,7 @@ create index lista_area_c_area_conocimiento_id_fk_ix on
 --
 create table palabra_clave(
   palabra_clave_id    integer          generated always as identity(start with 1 increment by 1 nocache),
-  palabra             varchar2(80)     not null,
+  palabra             varchar2(200)     not null,
   recurso_id          integer          not null,
   constraint palabra_clave_pk primary key (palabra_clave_id) using index(
     create unique index palabra_clave_pk_iuk on palabra_clave(palabra_clave_id)
