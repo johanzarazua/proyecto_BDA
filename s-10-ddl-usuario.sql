@@ -4,6 +4,8 @@
 
 connect heza_usuario/hezau
 
+Prompt Creando tablas y objetos del modulo usuario
+set serveroutput on;
 whenever sqlerror exit rollback
 
 -- Bloque para eliminar objectos en caso de existir
@@ -105,3 +107,6 @@ create index libro_prestamo_prestamo_id_fk_ix on libro_prestamo(prestamo_id)
   tablespace ts_usuario_index;
 create index libro_prestamo_recurso_id_fk_ix on libro_prestamo(recurso_id)
   tablespace ts_usuario_index;
+
+Prompt Listo !!!
+disconnect

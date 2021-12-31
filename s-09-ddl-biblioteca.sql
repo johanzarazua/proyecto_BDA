@@ -4,6 +4,7 @@
 
 connect heza_biblioteca/hezab
 
+Prompt Creando tablas y objetos del modulo biblioteca
 set serveroutput on;
 whenever sqlerror exit rollback
 
@@ -331,3 +332,6 @@ BEGIN
   END CASE;
 END tr_historico_status_recurso;
 /
+
+Prompt Listo !!!
+disconnect
