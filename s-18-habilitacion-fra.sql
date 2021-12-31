@@ -8,7 +8,7 @@ whenever sqlerror exit rollback;
 connect sys/system as sysdba
 
 alter system set db_recovery_file_dest_size = 1362M scope = both;
-alter system set db_recovery_file_dest = 'LOCATION=/u01/app/oracle/oradata/HEZAPROY/disk_1' scope = both;
+alter system set db_recovery_file_dest = '/u01/app/oracle/oradata/HEZAPROY/disk_1' scope = both;
 alter system set db_flashback_retention_target = 1440 scope = both;
 
 --rman> configure controlfile autobackup format for device type disk clear
