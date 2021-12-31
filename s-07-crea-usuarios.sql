@@ -7,6 +7,7 @@ connect sys as sysdba
 set serveroutput on;
 whenever sqlerror exit rollback
 
+Prompt Borrando usuarios y roles
 declare 
   v_count_rol number;
   v_count_hezau number;
@@ -33,22 +34,29 @@ exception
 end;
 /
 
+Prompt Creando rol para los usuarios
 -- Rol de privilegios
 create role rol_admin_proy;
 grant create session, create table, create sequence, create synonym,
   create public synonym, create view, create procedure,
   create trigger to rol_admin_proy;
 
+Prompt Creando usuario para modulo usuario
 -- Usuario para el modulo usuario
 create user heza_usuario identified by hezau default tablespace ts_usuario
   quota unlimited on ts_usuario
   quota unlimited on ts_usuario_index
   quota unlimited on ts_lob;
 
+Prompt Creando usuario para modulo biblioteca
 -- Usuario para modulo biblioteca
 create user heza_biblioteca identified by hezab default tablespace ts_biblioteca
   quota unlimited on ts_biblioteca
   quota unlimited on ts_biblioteca_index
   quota unlimited on ts_lob;
 
+Prompt Asignando rol a usuarios
 grant rol_admin_proy to heza_usuario, heza_biblioteca;
+
+Prompt Listo !!!
+disconnect
