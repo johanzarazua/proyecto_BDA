@@ -57,13 +57,14 @@ En el repositorio se podran encontrar la siguiente lista de scripts:
 |-------------------|-------------|
 | s-01-crear-loop-devices.sh| Creación de los directorios donde se encontraran diferentes archivos de la base de datos y simulacion de puntos demontaje usando loop devices para multiplexar algunos archivos.|
 |s-02-crea-pwd-param-oracle.sh| Creación del archivo de password y pfile con parametros inciales de la base de datos|
-|s-03creacion-bd.sql|Creación de la base de datos usando el comando create database|
-|s-04-crea-tablespaces.sql| Creación de los tablespaces necesarios para cada modulo asi como un tablespace compartido para campos blob|
-|s-05-crea-usarios.sql| Creación de usuarios por modulo y asigancion de privilegios para crear objetos|
-|s-06-ddl-biblioteca.sql| Creación de tablas e indices del modulo biblioteca|
-|s-07-ddl-usuario.sql| Creación de tablas e indices del modulo usuario|
-|s-08-modos-conexion.sql| Configuracion de parametros necesarios para contar con modos de conexion dedicado y compartido|
-|s-09-carga-biblioteca.sql| Carga inicial de datos para el modulo biblioteca|
-|s-10-carga-usuario.sql| Carga inicial de datos para el modulo usuario|
-|s-11-redo-biblioteca.sql| Genereaciòn de datos de redo para modulo biblioteca|
-|s-12-redo-usuario.sql| Genereaciòn de datos de redo para modulo usuario|
+|s-03-creacion-bd.sql|Creación de la base de datos usando el comando create database|
+|s-04-modos-conexion.sql| Configuracion de parametros necesarios para contar con modos de conexion dedicado y compartido|
+|s-05-mod-archivelog.sql|Configuracion necesaria para habilitar el modo archivelog|
+|s-06-crea-tablespaces.sql| Creación de los tablespaces necesarios para cada modulo asi como un tablespace compartido para campos blob|
+|s-07-crea-usarios.sql| Creación de usuarios por modulo y asigancion de privilegios para crear objetos|
+|s-08-ddl-biblioteca.sql| Creación de tablas e indices del modulo biblioteca|
+|s-09-ddl-usuario.sql| Creación de tablas e indices del modulo usuario|
+|s-10-carga-biblioteca.sql| Carga inicial de datos para el modulo biblioteca|
+|s-11-carga-usuario.sql| Carga inicial de datos para el modulo usuario|
+|s-12-redo-biblioteca.sql| Genereaciòn de datos de redo para modulo biblioteca|
+|s-13-redo-usuario.sql| Genereaciòn de datos de redo para modulo usuario|

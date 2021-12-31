@@ -27,7 +27,7 @@ begin
   for r in cur_insert loop
     select max(biblioteca_id) into v_max_id from biblioteca;
     insert into biblioteca (nombre, folio, ubi_geografica, pagina_web, direccion) 
-      values (r.nombre||v_max_id, substr(r.folio,3)||v_max_id, r.ubi_geografica, r.pagina_web, r. direccion);
+      values (r.nombre||v_max_id, dbms_random.string('x',5), r.ubi_geografica, r.pagina_web, r. direccion);
     v_count :=  v_count + 1;
   end loop;
   dbms_output.put_line('Registros insertados en BIBLIOTECA: '||v_count);
