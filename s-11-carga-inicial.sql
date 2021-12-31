@@ -17,7 +17,9 @@ Prompt Ejecutando scripts con datos
 @@s-12-carga-datos-biblioteca.sql
 @@s-13-carga-datos-usuario.sql
 
-Prompt Caraga inicial lista, activando archivelog
+Prompt Caraga inicial lista, conectando con usuario sys para activar archivelog
+connect sys/system as sysdba
+
 shutdown immediate
 startup mount
 alter database archivelog;
