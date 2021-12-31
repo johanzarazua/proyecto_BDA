@@ -12,12 +12,11 @@ whenever sqlerror exit rollback
 declare
   v_total_dia number;
 begin
-  -- loop para simular 5 dias
-  for i in 1..5 loop
 
-    v_total_dia := 0;
-    -- loop para simular datos por dia
-    for n in 1..3 loop
+  v_total_dia := 0;
+  -- loop para simular 1 dia
+  for i in 1..6 loop
+
       
       -- REDO BIBLIOTECA
       declare
@@ -76,7 +75,7 @@ begin
           insert into area_conocimiento (nombre) values (r.nombre||v_max_id);
           v_count :=  v_count + 1;
         end loop;
-        dbms_output.put_line('Registros insertados en AREA CONOCIMIENTO: '||v_count);\
+        dbms_output.put_line('Registros insertados en AREA CONOCIMIENTO: '||v_count);
         v_total_dia := v_total_dia + v_count;
 
         select max(area_conocimiento_id) into v_max_id from area_conocimiento;
@@ -304,11 +303,11 @@ begin
         v_total_dia := v_total_dia + v_count;
 
       end;
-    end loop;
 
-    dbms_output.put_line('Total de datos manipulados en un dia: ' || v_total_dia)
 
   end loop;
+
+  dbms_output.put_line('Total de datos manipulados en un dia: ' || v_total_dia);
 end;
 /
 

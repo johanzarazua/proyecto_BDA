@@ -55,12 +55,11 @@ show errors
 declare
   v_total_dia number;
 begin
-  -- loop para simular 5 dias
-  for i in 1..5 loop
 
-    v_total_dia := 0;
-    -- loop para simular datos por dia
-    for n in 1..3 loop
+  v_total_dia := 0;
+  -- loop para simular 5 dias
+  for i in 1..6 loop
+
 
     -- REDO para Usuario
       declare
@@ -154,11 +153,9 @@ begin
         v_total_dia := v_total_dia + v_count_prestamo + v_count_libros;
 
       end;
-    end loop;
-
-    dbms_output.put_line('Total de datos manipulados en un dia: ' || v_total_dia)
-
   end loop;
+
+  dbms_output.put_line('Total de datos manipulados en un dia: ' || v_total_dia);
 end;
 /
 
