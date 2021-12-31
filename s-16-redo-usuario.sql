@@ -58,7 +58,7 @@ begin
 
   v_total_dia := 0;
   -- loop para simular 5 dias
-  for i in 1..6 loop
+  for i in 1..4 loop
 
 
     -- REDO para Usuario
