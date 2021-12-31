@@ -11,7 +11,7 @@ connect heza_usuario/hezau@HEZAPROY
 
 set define off
 
-Prompt realizando la carga de datos
+Prompt realizando la carga de datos al modulo usuario
 @datos_iniciales/usuario.sql
 @datos_iniciales/prestamo.sql
 @datos_iniciales/libro_prestamo.sql
@@ -27,3 +27,4 @@ commit;
 whenever sqlerror continue none
 
 Prompt Listo!
+disconnect

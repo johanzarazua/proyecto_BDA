@@ -11,7 +11,7 @@ connect heza_biblioteca/hezab@HEZAPROY
 
 set define off
 
-Prompt realizando la carga de datos
+Prompt realizando la carga de datos al modulo biblioteca
 @@datos_iniciales/biblioteca.sql
 @@datos_iniciales/area_conocimiento.sql
 @@datos_iniciales/status_recurso.sql
@@ -30,6 +30,18 @@ Prompt realizando la carga de datos
 
 set define on
 
+update recurso set tipo = 'L' where recurso_id in (
+  select recurso_id from libro
+); 
+
+update recurso set tipo = 'R' where recurso_id in (
+  select recurso_id from revista
+); 
+
+update recurso set tipo = 'T' where recurso_id in (
+  select recurso_id from tesis
+);
+
 Prompt confirmando cambios
 commit;
 
@@ -39,3 +51,4 @@ commit;
 whenever sqlerror continue none
 
 Prompt Listo!
+disconnect

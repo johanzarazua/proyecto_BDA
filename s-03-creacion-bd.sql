@@ -8,6 +8,7 @@ connect sys/hola1234* as sysdba
 
 startup nomount
 
+Prompt Creando spfile usando pfile
 create spfile from pfile;
 
 whenever sqlerror exit rollback
@@ -48,10 +49,12 @@ create database hezaproy
   datafile '/u01/app/oracle/oradata/HEZAPROY/disk_1/undotbs01.dbf'
   size 200m reuse autoextend on next 5120k maxsize unlimited;
 
+Prompt Modificando passwords de usuarios
 alter user sys identified by system;
 alter user system identified by system;
 alter user sysbackup identified by system;
 
+Prompt Creando diccionario de datos
 @?/rdbms/admin/catalog.sql
 @?/rdbms/admin/catproc.sql
 @?/rdbms/admin/utlrp.sql
@@ -59,3 +62,6 @@ alter user sysbackup identified by system;
 connect system/system
 
 @?/sqlplus/admin/pupbld.sql
+
+Prompt Listo !!!!
+disconnect
