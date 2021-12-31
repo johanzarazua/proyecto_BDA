@@ -4,14 +4,34 @@
 
 connect sys as sysdba
 
+set serveroutput on;
 whenever sqlerror exit rollback
 
+Prompt Borrando tablespaces
+declare
+  cursor cur_ts is 
+    select tablespace_name from dba_tablespaces where tablespace_name like 'TS_%';
+
+begin
+  for r in cur_ts loop
+    DBMS_OUTPUT.PUT_LINE('Eliminando TS => ' || r.tablespace_name);
+    execute immediate 'drop tablespace ' || r.tablespace_name 
+      || ' including contents and datafiles';
+  end loop;
+exception
+  when others then
+    dbms_output.put_line('ERROR, se obtuvo excepción  no esperada => ' || TO_CHAR(sqlcode));
+    dbms_output.put_line('ERROR => ' || SQLERRM);
+end;
+
 -- Tablespace comun para almacenar fotografias y PDFs
+Prompt Crenado tablespace para datos blob
 create bigfile tablespace ts_lob
   datafile '/u01/app/oracle/oradata/HEZAPROY/disk_1/ts_blob01.dbf' size 3G
   extent management local autoallocate
   segment space management auto;
 
+Prompt Crenado tablespaces para modulo usuario
 -- Tablespace para modulo usuarios
 create tablespace ts_usuario
   datafile '/u01/app/oracle/oradata/HEZAPROY/disk_2/ts_usuario01.dbf' size 250M
@@ -25,6 +45,7 @@ create tablespace ts_usuario_index
   extent management local autoallocate
   segment space management auto;
 
+Prompt Crenado tablespaces para modulo biblioteca
 -- Tablespace para modulo biblioteca
 create bigfile tablespace ts_biblioteca
   datafile '/u01/app/oracle/oradata/HEZAPROY/disk_3/ts_biblioteca01.dbf'
@@ -37,3 +58,6 @@ create tablespace ts_biblioteca_index
     size 100M autoextend on next 50M maxsize 500m
   extent management local autoallocate
   segment space management auto;
+
+Prompt Listo !!!
+disconnect
