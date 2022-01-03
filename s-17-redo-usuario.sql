@@ -110,7 +110,7 @@ begin
         dbms_output.put_line('Registros editados en USUARIO: '||v_count);
         v_total_dia := v_total_dia + v_count;
 
-
+         v_count := 0;
         for r in cur_delete loop
           delete from usuario Where usuario_id = r.usuario_id;
           v_count := v_count + 1;
