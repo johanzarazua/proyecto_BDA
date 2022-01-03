@@ -1,0 +1,8 @@
+connect target "sys/system@hezaproy as sysdba"
+run {
+  configure channel device type disk
+    format '/u01/app/oracle/oradata/HEZAPROY/disk_1/backups/backup_%U.bkp' maxpiecesize 2G;
+  backup database plus archivelog tag proy_full_inicial;
+}
+list backup;
+delete obsolete;
