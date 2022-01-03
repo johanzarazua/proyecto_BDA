@@ -11,12 +11,6 @@ show parameter control_files;
 shutdown immediate
 startup nomount
 
--- Utilizando rman para mover el control file
--- !echo "restore controlfile to '/u01/app/oracle/oradata/HEZAPROY/disk_fra/control03.ctl' from '/u01/app/oracle/oradata/HEZAPROY/disk_3/control03.ctl'; " | rman target /
-!echo "restore controlfile from '/u01/app/oracle/oradata/HEZAPROY/disk_3/control03.ctl'; " | rman target /
-
-!find /u01/app/oracle/oradata/HEZAPROY/ -type f -name control*
-
 --Editar el parametro control file agregando el nombre del archivo de control creado en la FRA
 alter system set 
   control_files = '/u01/app/oracle/oradata/HEZAPROY/disk_1/control01.ctl', '/u01/app/oracle/oradata/HEZAPROY/disk_2/control02.ctl', '/u01/app/oracle/oradata/HEZAPROY/disk_fra/control03.ctl'
@@ -26,6 +20,13 @@ alter system set
 -- alter system set 
 --   control_files = '/u01/app/oracle/oradata/HEZAPROY/disk_1/control01.ctl','/u01/app/oracle/oradata/HEZAPROY/disk_2/control02.ctl','/u01/app/oracle/oradata/HEZAPROY/disk_3/control03.ctl'
 --   scope = spfile;
+
+-- Utilizando rman para mover el control file
+-- !echo "restore controlfile to '/u01/app/oracle/oradata/HEZAPROY/disk_fra/control03.ctl' from '/u01/app/oracle/oradata/HEZAPROY/disk_3/control03.ctl'; " | rman target /
+!echo "restore controlfile from '/u01/app/oracle/oradata/HEZAPROY/disk_3/control03.ctl'; " | rman target /
+
+!find /u01/app/oracle/oradata/HEZAPROY/ -type f -name control*
+
 
 --detener la instancia y levantarla en modo normal 
 shutdown immediate

@@ -31,8 +31,8 @@ begin
   for r in cur_grops_logs loop
     v_statement := 'alter database add logfile thread ' || r.thr || ' size 50M';
     execute immediate v_statement;
-    execute immediate 'alter database add logfile member ''/u01/app/oracle/oradata/HEZAPROY/disk_1/redo' || v_max_group || 'b.log'' to group ' || v_max_group;
-    execute immediate 'alter database add logfile member ''/u01/app/oracle/oradata/HEZAPROY/disk_2/redo' || v_max_group || 'c.log'' to group ' || v_max_group;
+    execute immediate 'alter database add logfile member ''/u01/app/oracle/oradata/HEZAPROY/disk_1/redo0' || v_max_group || 'b.log'' to group ' || v_max_group;
+    execute immediate 'alter database add logfile member ''/u01/app/oracle/oradata/HEZAPROY/disk_2/redo0' || v_max_group || 'c.log'' to group ' || v_max_group;
     begin
       v_statement := 'alter database drop logfile group ' || r.grp;
       execute immediate v_statement;

@@ -12,4 +12,4 @@ alter system set db_recovery_file_dest = '/u01/app/oracle/oradata/HEZAPROY/disk_
 alter system set db_flashback_retention_target = 1600;
 
 -- Copias de redologs dentro de la FRA
-alter system set log_archive_dest_2 = 'LOCATION=USE_DB_RECOVERY_FILE_DEST MANDATORY';
+alter system set log_archive_dest_2 = 'LOCATION=USE_DB_RECOVERY_FILE_DEST';
