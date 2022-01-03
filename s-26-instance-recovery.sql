@@ -113,9 +113,11 @@ end;
 
 conn sys/system as sysdba
 
+Prompt shutdown abort
 shutdown abort
 
 set timing on
+Prompt levantando la instancia 
 startup
 set timing off
 
