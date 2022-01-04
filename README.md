@@ -40,13 +40,23 @@ Modelo relacional del caso de estudio.
 ![Modelo relacional](Modelo_logico.png)
 
 Este modelo sera dividido en 2 modulos y cada uno de ellos sera administrado por un usuario particular
-|Modulo|Descripción|Usaurio|
+|Modulo|Descripción|Usuario|
 |------|-----------|-------|
-|Usuario|Objetos y funcionalidades relacionadas a los usuarios y sus préstamos|heza_usaurio
+|Usuario|Objetos y funcionalidades relacionadas a los usuarios y sus préstamos|heza_usuario
 |Biblioteca|Objetos y funcionalidades relacionadas a las bibliotecas, áreas de conocimiento, recursos y status del recurso|heza_biblioteca|
 
 ![Modulos](Modulos.png)
 
+Cálculo de la FRA
+|Variable|Tamaño (Mb)|
+|--------|-----------|
+|Tamaño de una copia de la base de datos|681.09|
+|Tamaño de un backup incremental nivel 1|20.67|
+|Tamaño de los archive redo logs que se producirán en N+1 días (N = 6)|268.079|
+|Tamaño del backup set que contiene el archivo de control|17.83|
+|Tamaño de los flashback logs|60|
+|Tamaño de uno de los miembors de redo logs * (N+1)|200|
+|Total de espacio estimado para la FRA|1361.4359 => 1400 => 1600|
 
 ## Cotenido del respositorio 
 ---
