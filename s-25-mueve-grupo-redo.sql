@@ -5,6 +5,7 @@
 whenever  sqlerror exit rollback;
 
 conn sys/system as sysdba
+set serveroutput on;
 
 -- Consultar informacion de los grupos de redo existentes
 set linesize window
@@ -18,9 +19,9 @@ from
 -- Bloque PL para crear grupos de redo dentro de la FRA y miembros fuera 
 declare
   cursor cur_grops_logs is
-    select group# grp, thread# thr, bytes/1024 bytes from v$log
+    select group# grp, thread# thr, status from v$log
       order by 1;
-    
+  
   v_max_group number;
   v_statement varchar2(2048);
   v_log_switch varchar2(1024) := 'alter system switch logfile';
@@ -33,16 +34,31 @@ begin
     execute immediate v_statement;
     execute immediate 'alter database add logfile member ''/u01/app/oracle/oradata/HEZAPROY/disk_1/redo0' || v_max_group || 'b.log'' to group ' || v_max_group;
     execute immediate 'alter database add logfile member ''/u01/app/oracle/oradata/HEZAPROY/disk_2/redo0' || v_max_group || 'c.log'' to group ' || v_max_group;
-    begin
-      v_statement := 'alter database drop logfile group ' || r.grp;
-      execute immediate v_statement;
-    exception
-      when others then
-        execute immediate v_log_switch;
-        execute immediate v_checkpoint_gbl;
-        execute immediate v_statement;
-    end;
-    execute immediate v_log_switch;
+    
+    if r.status = 'CURRENT' THEN
+      dbms_output.put_line('status current');
+      execute immediate v_log_switch;
+      execute immediate v_checkpoint_gbl;
+    end if;
+
+    if r.status = 'ACTIVE' THEN
+      dbms_output.put_line('status active');
+      execute immediate v_checkpoint_gbl;
+    end if;
+    
+    v_statement := 'alter database drop logfile group ' || r.grp;
+    execute immediate v_statement;
+    
+    
+    -- begin
+      
+    -- exception
+    --   when others then
+    --     execute immediate v_log_switch;
+    --     execute immediate v_checkpoint_gbl;
+    --     execute immediate v_statement;
+    -- end;
+    -- execute immediate v_log_switch;
   end loop;
 end;
 /
