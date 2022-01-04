@@ -10,11 +10,8 @@ set serveroutput on;
 -- Consultar informacion de los grupos de redo existentes
 set linesize window
 col member for a60
-select l.thread#, group#, sequence#, l.status, member, type,  
-  IS_RECOVERY_DEST_FILE is_rdf 
-from 
-  v$logfile inner join v$log l
-  using (group#) order by  l.thread#, group#;
+select l.thread#, group#, sequence#, l.status, member, type,  IS_RECOVERY_DEST_FILE is_rdf 
+  from v$logfile inner join v$log l using (group#) order by  l.thread#, group#;
 
 -- Bloque PL para crear grupos de redo dentro de la FRA y miembros fuera 
 declare
@@ -30,10 +27,10 @@ begin
   select max(group#) + 1 into v_max_group from v$log;
 
   for r in cur_grops_logs loop
-    v_statement := 'alter database add logfile thread ' || r.thr || ' size 50M';
+    v_statement := 'alter database add logfile thread ' || r.thr || ' group ' || v_max_group || 'size 50M';
     execute immediate v_statement;
-    execute immediate 'alter database add logfile member ''/u01/app/oracle/oradata/HEZAPROY/disk_1/redo0' || v_max_group || 'b.log'' to group ' || v_max_group;
-    execute immediate 'alter database add logfile member ''/u01/app/oracle/oradata/HEZAPROY/disk_2/redo0' || v_max_group || 'c.log'' to group ' || v_max_group;
+    execute immediate 'alter database add logfile member ''/u01/app/oracle/oradata/HEZAPROY/disk_1/redo0' || v_max_group || 'a.log'' to group ' || v_max_group;
+    execute immediate 'alter database add logfile member ''/u01/app/oracle/oradata/HEZAPROY/disk_2/redo0' || v_max_group || 'b.log'' to group ' || v_max_group;
     
     if r.status = 'CURRENT' THEN
       dbms_output.put_line('status current');
@@ -49,7 +46,7 @@ begin
     v_statement := 'alter database drop logfile group ' || r.grp;
     execute immediate v_statement;
     
-    
+    v_max_group := v_max_group + 1;
     -- begin
       
     -- exception
