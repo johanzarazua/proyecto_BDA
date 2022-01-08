@@ -59,11 +59,13 @@ Cálculo de la FRA
 |Total de espacio estimado para la FRA|1361.4359 => 1400 => 1600|
 
 Planeación del esquema de respaldos
--Tipos de backups a realizar: Backup incremental nivel 0 y backup incremental nivel 1 diferencial
--Frecuencia de repetición: Backup incremental nivel 0 cada 7 días y backup incremental nivel 1 diferencial cada día
--Ubicaciones de respaldo (FRA): FRA
--Política de retención de backups: Se necesita mínimo un backup completo nivel 0 (configure retention policy redundancy 1)
--Tamaño total en espacio en disco para realizar backups: 2 Gb
+|Concepto|Valor|
+|--------|-----------|
+|Tipos de backups a realizar|Backup incremental nivel 0 y backup incremental nivel 1 diferencial|
+|Frecuencia de repetición|Backup incremental nivel 0 cada 7 días y backup incremental nivel 1 diferencial cada día|
+|Ubicaciones de respaldo (FRA)|FRA|
+|Política de retención de backups|Se necesita mínimo un backup completo nivel 0 (configure retention policy redundancy 1)|
+|Tamaño total en espacio en disco para realizar backups|2 Gb|
 
 ## Cotenido del respositorio 
 ---
