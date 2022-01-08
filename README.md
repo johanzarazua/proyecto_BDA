@@ -47,6 +47,23 @@ Este modelo sera dividido en 2 modulos y cada uno de ellos sera administrado por
 
 ![Modulos](Modulos.png)
 
+Cálculo de la FRA
+|Variable|Tamaño (Mb)|
+|--------|-----------|
+|Tamaño de una copia de la base de datos|681.09|
+|Tamaño de un backup incremental nivel 1|20.67|
+|Tamaño de los archive redo logs que se producirán en N+1 días (N = 6)|268.079|
+|Tamaño del backup set que contiene el archivo de control|17.83|
+|Tamaño de los flashback logs|60|
+|Tamaño de uno de los miembors de redo logs * (N+1)|200|
+|Total de espacio estimado para la FRA|1361.4359 => 1400 => 1600|
+
+Planeación del esquema de respaldos
+-Tipos de backups a realizar: Backup incremental nivel 0 y backup incremental nivel 1 diferencial
+-Frecuencia de repetición: Backup incremental nivel 0 cada 7 días y backup incremental nivel 1 diferencial cada día
+-Ubicaciones de respaldo (FRA): FRA
+-Política de retención de backups: Se necesita mínimo un backup completo nivel 0 (configure retention policy redundancy 1)
+-Tamaño total en espacio en disco para realizar backups: 2 Gb
 
 ## Cotenido del respositorio 
 ---
