@@ -173,6 +173,90 @@ Este modelo sera dividido en 2 modulos y cada uno de ellos sera administrado por
 |ts_biblioteca|Almacenar datos sobre las tablas|permanente|Big file, de 500M auto extendible hasta 3GB, extent management local autoallocate y segment space management auto, $ORACLE_BASE/oradata/$ORACLE_SID/disk_3/usuariots.dbf
 |ts_blibioteca_index|Guardar en un ts dedicado los índices del módulo|permanente|Small file (un datafile),  de 100M auto extendible hasta 500M, extent management local autoallocate y segment space management auto, $ORACLE_BASE/oradata/$ORACLE_SID/disk_2/usuarioidxts.dbf
 
+### ASIGNACION DE TABLESPACES PARA TABLAS DE CADA MODULO
+<b>Modulo Usuario:</b>
+|Tabla|Tablesapce|
+|-----|----------|
+|Usario|ts_usuario|
+|Prestamo|ts_usuario|
+|Libro_prestamo|ts_usuario|
+
+<b>Modulo BIblioteca</b>
+|Tabla|Tablesapce|
+|-----|----------|
+|Biblioteca|ts_biblioteca|
+|Lsita_area_c|ts_biblioteca|
+|Area_conocimineto|ts_biblioteca|
+|Status_recurso|ts_biblioteca|
+|Historico_status_recurso|ts_biblioteca|
+|Recurso|ts_biblioteca|
+|Libro|ts_biblioteca|
+|Revista|ts_biblioteca|
+|Tesis|ts_biblioteca|
+|Palabra_clave|ts_biblioteca|
+|Editorial|ts_biblioteca|
+|Autor|ts_biblioteca|
+|Autor_libro|ts_biblioteca|
+
+### ASIGNACION DE TABLESPACES PARA INDICES DE CADA MODULO
+<b>Modulo Usuario:</b>
+|Nombre del índice|Tipo de indice|Nombre de la tabla|Nombre de la columna|Nombre del tablespace|
+|-----------------|--------------|------------------|--------------------|---------------------|
+|usuario_pk|Primary key|Usuario|usuario_id|ts_usuario_index|
+|prestamo_pk|Primary key|Prestamo|prestamo_id|ts_usuario_index|
+|prestamo_usuario_id_fk|Foreing key|Prestamo|usuario_id|ts_usuario_index|
+|prestamo_folio_usuario_uk|Unique |Prestamo|usuario_id, folio_prestamo|ts_usuario_index|
+|libro_prestamo_pk|Primary key|Libro_prestamo|libro_prestamo_id|ts_usuario_index|
+|libro_prestamo_folio_prestamo_fk|Foreing key|Libro_prestamo|prestamo_id|ts_usuario_index|
+|libro_prestamo_recurdo_id_fk|Foreing key|Libro_prestamo|recurso_id|ts_usuario_index|
+
+<b>Modulo BIblioteca</b>
+|Nombre del índice|Tipo de indice|Nombre de la tabla|Nombre de la columna|Nombre del tablespace|
+|-----------------|--------------|------------------|--------------------|---------------------|
+|biblioteca_pk|Primary key|Biblioteca|biblioteca_id|ts_biblioteca_index
+|lista_area_c_pk|Primary key|Lista_area_c|lista_area_c_id|ts_biblioteca_index
+|lista_area_c_blibioteca_id_fk|Foreing key|Lista_area_c|biblioteca_id|ts_biblioteca_index
+|lista_area_c_area_conocimiento_id_fk|Foreing key|Lista_area_c|area_conocimiento_id|ts_biblioteca_index
+|autor_libro_pk|Primary key|Autor_libro|autor_libro_id|ts_biblioteca_index
+|autor_libro_recurso_id_fk|Foreing key|Autor_libro|recurso_id|ts_biblioteca_index
+|autor_libro_autor_id_fk|Foreing key|Autor_libro|autor_id|ts_biblioteca_index
+|autor_pk|Primary key|Autor|autor_id|ts_biblioteca_index
+|editorial_pk|Primary key |Editorial|editorial_id|ts_biblioteca_index
+|area_conocimeinto_pk|Primary key|Area_conocimiento|area_conocimiento_id|ts_biblioteca_index
+|status_recurso_pk|Primary key|Status_recurso|status_recurso_id|ts_biblioteca_index
+|palabra_clave_pk|Primary key|Palabra_clave|palabra_clave_id|ts_biblioteca_index
+|palabra_clave_recurso_id_fk|Foreing key|Palabra_clave|recurso_id|ts_biblioteca_index
+|palabra_clave_palabra_recurso_id_uk|Unique |Palabra_clave|recurso_id, palabra|ts_biblioteca_index
+|historico_status_recurso_pk|Primary key|Historico_status_recurso|historico_status_recurso_id|ts_biblioteca_index
+|historico_status_recurso_recurso_id_fk|Foreing key|Historico_status_recurso|status_recurso_id|ts_biblioteca_index
+|historico_status_recurso_status_recurso_id_fk|Foreing key|Historico_status_recurso|recurso_id|ts_biblioteca_index
+|recurso_pk|Primary key|Recurso|recurso_id|ts_biblioteca_index
+|recurso_recurso_nuevo_id_fk|Foreing key|Recurso|recurso_nuevo_id|ts_biblioteca_index
+|recurso_area_conocimiento_id_fk|Foreing key |Recurso|area_conocimiento_id|ts_biblioteca_index
+|recurso_status_recurso_id_fk|Foreing key |Recurso|status_recurso_id|ts_biblioteca_index
+|recurso_biblioteca_id_fk|Foreing key |Recurso|biblioteca_id|ts_biblioteca_index
+|tesis_pk|Primary key|Tesis|recurso_id|ts_biblioteca_index
+|tesis_recurso_id_fk|Foreing key|Tesis|recurso_id|ts_biblioteca_index
+|revista_pk|Primary key|Revista|recurso_id|ts_biblioteca_index
+|revista_recurso_id_fk|Foreing key|Revista|recurso_id|ts_biblioteca_index
+|revista_editorial_id_fk|Foreing key|Revista|editorial_id|ts_biblioteca_index
+|libro_pk|Primary key|Libro|recurso_id|ts_biblioteca_index
+|libro_recurso_id_pk|Foreing key|Libro|recurso_id|ts_biblioteca_index
+|libro_editorial_id_fk|Foreing key|Libro|editorial_id|ts_biblioteca_index
+
+### ASIGNACION DE TABLESPACES PARA COLUMNAS CLOB/BLOB DE CADA MODULO
+<b>Modulo Usuario:</b>
+|Nombre de la columna clob/blob|Nombre del índice asociado a la columna clob/blob|Nombre de la tabla|Nombre del tablespace para la columna clob/blob|Nombre del tablespace para el índice de la columna clob/blob|
+|-----------|---------|------------|-------------|---------------|
+|foto|usuario_foto_idx|Usuario|ts_blob|ts_usario_index|
+
+<b>Modulo BIblioteca</b>
+|Nombre de la columna clob/blob|Nombre del índice asociado a la columna clob/blob|Nombre de la tabla|Nombre del tablespace para la columna clob/blob|Nombre del tablespace para el índice de la columna clob/blob|
+|-----------|---------|------------|-------------|---------------|
+|PDF|libro_pdf_idx|Libro|ts_blob|ts_bibliteca_index|
+|PDF|tesis_pdf_idx|Tesis|ts_blob|ts_bibliteca_index|
+
+
 
 ## PLANEACIÓN PARA LA CREACION DE LA NUEVA BD
 ---
