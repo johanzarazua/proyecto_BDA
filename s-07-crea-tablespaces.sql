@@ -2,17 +2,28 @@
 --@Fecha creacion: 26/12/2021
 --@Descripcion: Creacion de tablespaces
 
-connect sys as sysdba
+connect sys@hezaproy as sysdba
 
 set serveroutput on;
 whenever sqlerror exit rollback
 
 Prompt Borrando tablespaces
 declare
+  cursor cur_constraits is 
+    Select OWNER, CONSTRAINT_NAME, TABLE_NAME, CONSTRAINT_TYPE from DBA_CONSTRAINTS 
+      where owner like 'HEZA_%' and CONSTRAINT_TYPE <> 'C';
+
   cursor cur_ts is 
-    select tablespace_name from dba_tablespaces where tablespace_name like 'TS_%';
+    select tablespace_name from dba_tablespaces where tablespace_name like 'TS_%'
+      order by 1 desc;
 
 begin
+  for r in cur_constraits loop
+    DBMS_OUTPUT.PUT_LINE('Eliminando Constrait => ' || r.constraint_name);
+    execute immediate 'alter table ' || r.owner ||'.'||r.table_name 
+      || ' drop constraint ' || r.constraint_name;
+  end loop;
+
   for r in cur_ts loop
     DBMS_OUTPUT.PUT_LINE('Eliminando TS => ' || r.tablespace_name);
     execute immediate 'drop tablespace ' || r.tablespace_name 
@@ -23,7 +34,7 @@ exception
     dbms_output.put_line('ERROR, se obtuvo excepción  no esperada => ' || TO_CHAR(sqlcode));
     dbms_output.put_line('ERROR => ' || SQLERRM);
 end;
-
+/
 -- Tablespace comun para almacenar fotografias y PDFs
 Prompt Crenado tablespace para datos blob
 create bigfile tablespace ts_lob

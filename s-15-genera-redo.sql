@@ -5,7 +5,7 @@
 whenever  sqlerror exit rollback
 
 Prompt Ejecutando scripts con simulacion de datos
-@@s-15-redo-biblioteca.sql
-@@s-16-redo-usuario.sql
+@@s-16-redo-biblioteca.sql
+@@s-17-redo-usuario.sql
 
 Prompt Listo !!!
