@@ -35,7 +35,7 @@ bandera llamada “con préstamo”. Cuando la vigencia del préstamo expira, se
 libros se almacena la fecha de entrega y en caso de aplicar el importe de la multa del préstamo por entrega tardía o por maltrato de recursos.
 Cada usuario cuenta con su consecutivo de préstamos iniciando en 1.
 
-## Modelo relacional del caso de estudio. 
+## MODELO RELACIONAL DEL CASO DE ESTUDIO. 
 ---
 
 ![Modelo relacional](Modelo_logico.png)
@@ -48,7 +48,7 @@ Este modelo sera dividido en 2 modulos y cada uno de ellos sera administrado por
 
 ![Modulos](Modulos.png)
 
-### Diseño logico de la base de datos
+### DISEÑO LOGICO DE LA BASE DE DATOS
 
 <table>
   <thead>
@@ -111,7 +111,7 @@ Este modelo sera dividido en 2 modulos y cada uno de ellos sera administrado por
   </tbody>
 </table>
 
-### Esquema de indexado
+### ESQUEMA DE INDEXADO
 |Nombre de la tabla|Nombre del índice|tipo|Proposito|
 |------------------|-----------------|----|---------|
 |Usuario|usuario_pk|Primary key|Identificar de manera única cada registro
@@ -152,15 +152,15 @@ Este modelo sera dividido en 2 modulos y cada uno de ellos sera administrado por
 |Libro_prestamo|libro_prestamo_folio_prestamo_fk|Foreing key|Relacionar la lista de libros que incluye un préstamo
 |Libro_prestamo|libro_prestamo_recurdo_id_fk|Foreing key|Relacionar un recurso con la lista de recursos que incluye el préstamo
 
-## Definicion de tablespaces
+## DEFINICION DE TABLESPACES
 ---
 
-### tablespaces comunes a los modulos
+### TABLESPACES COMUNES A LOS MODULOS
 |Nombre|Configuracion|
 |---------------------|-------------|
 |ts_ blob|Big file, 3G, extent management local autoallocate y segment space management auto, $ORACLE_BASE/oradata/$ORACLE_SID/disk_1/ts_blob01.dbf|
 
-### Tablespaces por modulo
+### TABLESPACES POR MODULO
 <b>Modulo Usuario:</b>
 |Nombre|Objetivo|Tipo|Configuracion|
 |------|--------|----|-------------|
@@ -174,10 +174,7 @@ Este modelo sera dividido en 2 modulos y cada uno de ellos sera administrado por
 |ts_blibioteca_index|Guardar en un ts dedicado los índices del módulo|permanente|Small file (un datafile),  de 100M auto extendible hasta 500M, extent management local autoallocate y segment space management auto, $ORACLE_BASE/oradata/$ORACLE_SID/disk_2/usuarioidxts.dbf
 
 
-
-
-
-## Planeación para la creacion de la nueva BD
+## PLANEACIÓN PARA LA CREACION DE LA NUEVA BD
 ---
 
 |Configuracion|Descripción y/o configuración|
@@ -190,8 +187,7 @@ Número y ubicación de los archivos de control|3 archivos de control, ubicacion
 |Archivo de passwords|$ORACLE_HOME/dbs/orapwhezaproy<br>SYS = password<br>SYSBACKUP = password|
 
 
-
-## Cálculo de la FRA
+## CÁLCULO DE LA FRA
 ---
 
 |Variable|Tamaño (Mb)|
@@ -204,7 +200,7 @@ Número y ubicación de los archivos de control|3 archivos de control, ubicacion
 |Tamaño de uno de los miembors de redo logs * (N+1)|200|
 |Total de espacio estimado para la FRA|1361.4359 => 1400 => 1600|
 
-## Planeación del esquema de respaldos
+## PLANEACIÓN DEL ESQUEMA DE RESPALDOS
 ---
 
 |Concepto|Valor|
@@ -215,7 +211,7 @@ Número y ubicación de los archivos de control|3 archivos de control, ubicacion
 |Política de retención de backups|Se necesita mínimo un backup completo nivel 0 (configure retention policy redundancy 1)|
 |Tamaño total en espacio en disco para realizar backups|2 Gb|
 
-## Cotenido del respositorio 
+## COTENIDO DEL REPOSITORIO 
 ---
 
 En el repositorio se podran encontrar la siguiente lista de scripts:
