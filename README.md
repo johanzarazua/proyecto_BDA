@@ -48,6 +48,7 @@ Este modelo sera dividido en 2 modulos y cada uno de ellos sera administrado por
 
 ![Modulos](Modulos.png)
 
+
 ### DISEÑO LOGICO DE LA BASE DE DATOS
 
 <table>
@@ -199,6 +200,7 @@ Número y ubicación de los archivos de control|3 archivos de control, ubicacion
 |Tamaño de los flashback logs|60|
 |Tamaño de uno de los miembors de redo logs * (N+1)|200|
 |Total de espacio estimado para la FRA|1361.4359 => 1400 => 1600|
+
 
 ## PLANEACIÓN DEL ESQUEMA DE RESPALDOS
 ---
