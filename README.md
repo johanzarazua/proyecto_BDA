@@ -213,6 +213,21 @@ Número y ubicación de los archivos de control|3 archivos de control, ubicacion
 |Política de retención de backups|Se necesita mínimo un backup completo nivel 0 (configure retention policy redundancy 1)|
 |Tamaño total en espacio en disco para realizar backups|2 Gb|
 
+
+## PROGRAMACIÓN DE RESPALDOS
+---
+
+|Fecha y hora|Datos REDO producidos (Mb)|Fecha de respaldo|Tipo de backup|Espacio requerido por el backup (Mb)|
+|--------|--------|--------|--------|--------|
+|02/01/2021 (domingo) 18:00|0.0125|02/01/2021|Backup incremental nivel 0|217.8994|
+|03/01/2021 (lunes) 18:00|90.5715|03/01/2021|Backup incremental nivel 1 diferencial|108.4380|
+|04/01/2021 (martes) 18:00|93.4167|04/01/2021|Backup incremental nivel 1 diferencial|103.2110|
+|05/01/2021 (miércoles) 18:00|95.9454|05/01/2021|Backup incremental nivel 1 diferencial|105.3256|
+|06/01/2021 (jueves) 18:00|99.5715|06/01/2021|Backup incremental nivel 1 diferencial|108.4856|
+|07/01/2021 (viernes) 18:00|103.2563|07/01/2021|Backup incremental nivel 1 diferencial|106.5000|
+|08/01/2021 (sábado) 18:00|105.1254|08/01/2021|Backup incremental nivel 1 diferencial|103.5121|
+
+
 ## COTENIDO DEL REPOSITORIO 
 ---
 
